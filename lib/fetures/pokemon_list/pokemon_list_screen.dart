@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'wigets/wigets.dart';
 
 class PokemonList extends StatefulWidget {
   const PokemonList({super.key});
@@ -21,30 +21,8 @@ class _PokemonListState extends State<PokemonList> {
       body: ListView.separated(
         itemCount: 5,
         itemBuilder: ((context, index) {
-          const pokemonName = 'Pokemon';
-          return ListTile(
-            leading: SvgPicture.asset(
-              'assets/svg/pokeball.svg',
-              height: 40,
-              width: 40,
-            ),
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white60,
-            ),
-            title: Text(
-              pokemonName,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            subtitle: Text(
-              'Subtitle',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/pokemon_details', arguments: pokemonName);
-            },
-          );
+          var pokemonName = 'Pokemon $index';
+          return PokemonTile(pokemonName: pokemonName);
         }),
         separatorBuilder: ((context, index) => const Divider()),
       ),
