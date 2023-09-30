@@ -1,23 +1,23 @@
-import 'package:first_app/models/pokemon_model.dart';
+import 'package:first_app/fetures/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:first_app/repositories/pokemon_list_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'wigets/wigets.dart';
 
 class PokemonList extends StatefulWidget {
   const PokemonList({super.key});
-
-  //final String title;
 
   @override
   State<PokemonList> createState() => _PokemonListState();
 }
 
 class _PokemonListState extends State<PokemonList> {
-  List<Pokemon> _pokemonList = [];
+  final _pokemonListBloc = PokemonListBloc(GetIt.I<PokemonListRepository>());
 
   @override
   void initState() {
-    fetchPokemons();
+    _pokemonListBloc.add(LoadPokemons());
 
     super.initState();
   }
@@ -26,24 +26,25 @@ class _PokemonListState extends State<PokemonList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Theme.of(context).colorScheme.primary,
+        shadowColor: const Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: const Color.fromARGB(255, 9, 37, 66),
         title: const Text('My Pokemons'),
       ),
-      body: (_pokemonList.isEmpty)
-          ? const SizedBox()
-          : ListView.separated(
-              itemCount: _pokemonList.length,
-              itemBuilder: ((context, index) {
-                var pokemon = _pokemonList[index];
-                return PokemonTile(pokemon: pokemon);
-              }),
-              separatorBuilder: ((context, index) => const Divider()),
-            ),
+      body: BlocBuilder<PokemonListBloc, PokemonListState>(
+          bloc: _pokemonListBloc,
+          builder: (context, state) {
+            if (state is PokemonListLoaded) {
+              debugPrint('-----LOADED----');
+              return ListView.separated(
+                itemCount: state.pokemonList.length,
+                itemBuilder: ((context, index) {
+                  return PokemonTile(pokemon: state.pokemonList[index]);
+                }),
+                separatorBuilder: ((context, index) => const Divider()),
+              );
+            }
+            return const SizedBox();
+          }),
     );
-  }
-
-  fetchPokemons() async {
-    _pokemonList = await PokemonListRepository().fetchPokemonList();
-    setState(() {});
   }
 }

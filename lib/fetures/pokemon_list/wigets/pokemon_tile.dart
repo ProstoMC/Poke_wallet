@@ -1,6 +1,5 @@
 import 'package:first_app/models/pokemon_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class PokemonTile extends StatelessWidget {
   const PokemonTile({
@@ -12,16 +11,26 @@ class PokemonTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return PokemonTileWidget(pokemon: pokemon);
+  }
+}
+
+class PokemonTileWidget extends StatelessWidget {
+  const PokemonTileWidget({
+    super.key,
+    required this.pokemon,
+  });
+
+  final Pokemon pokemon;
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
-      leading: SvgPicture.network(
-        pokemon.imageURL,
-        height: 40,
+      leading: SizedBox(
         width: 40,
+        height: 40,
+        child: pokemon.imageSVG,
       ),
-      // trailing: const Icon(
-      //   Icons.arrow_forward_ios,
-      //   color: Colors.white60,
-      // ),
       title: Text(
         pokemon.name,
         style: Theme.of(context).textTheme.bodyMedium,
@@ -31,8 +40,7 @@ class PokemonTile extends StatelessWidget {
       //   style: Theme.of(context).textTheme.bodySmall,
       // ),
       onTap: () {
-        Navigator.of(context)
-            .pushNamed('/pokemon_details', arguments: pokemon.name);
+        Navigator.of(context).pushNamed('/pokemon_details', arguments: pokemon);
       },
     );
   }

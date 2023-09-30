@@ -1,8 +1,11 @@
+import 'package:first_app/repositories/pokemon_list_repository.dart';
 import 'package:first_app/router.dart';
 import 'package:first_app/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
+  GetIt.I.registerSingleton(PokemonListRepository());
   runApp(const FirstFlutterApp());
 }
 
