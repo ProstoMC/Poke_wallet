@@ -5,5 +5,6 @@
 Just get your first pokemons)
 
 
+![Login screen](https://raw.githubusercontent.com/ProstoMC/Poke_wallet/main/presentation_images/main_screen.png?)
+![Details screen](https://raw.githubusercontent.com/ProstoMC/Poke_wallet/main/presentation_images/details_screen.png?)
 
-![Login screen](https://github.com/ProstoMC/SecureStore/blob/main/SecureStore/Screenshots/Login%20Screen.png?
