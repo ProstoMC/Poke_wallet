@@ -13,5 +13,9 @@ class PokemonListBloc extends Bloc<PokemonListEvent, PokemonListState> {
       final pokemonList = await pokemonListRepository.fetchPokemonList();
       emit(PokemonListLoaded(pokemonList: pokemonList));
     });
+    on<AddPokemon>((event, emit) async {
+      final pokemonList = await pokemonListRepository.addPokemon();
+      emit(PokemonListLoaded(pokemonList: pokemonList));
+    });
   }
 }

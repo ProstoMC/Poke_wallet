@@ -48,7 +48,7 @@ class _PokemonListState extends State<PokemonList> {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Increment',
         onPressed: () {
-          _pokemonListBloc.add(LoadPokemons());
+          _pokemonListBloc.add(AddPokemon());
         },
         child: const Icon(Icons.add),
       ),

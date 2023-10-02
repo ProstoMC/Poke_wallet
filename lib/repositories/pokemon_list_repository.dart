@@ -13,26 +13,36 @@ extension StringExtension on String {
 
 abstract class AbstractPokemonListRepository {
   Future<List<Pokemon>> fetchPokemonList();
+  Future<List<Pokemon>> addPokemon();
+  List<Pokemon> getPokemons();
 }
 
 class PokemonListRepository implements AbstractPokemonListRepository {
+  var _pokemonList = <Pokemon>[];
+
   @override
-  Future<List<Pokemon>> fetchPokemonList() async {
-    debugPrint('Fetching');
-    var pokemonList = <Pokemon>[];
-
-    for (int index = 0; index < 5; index++) {
-      final id = Random().nextInt(150) + 1;
-
-      final pokemon = await fetchPokemon(id);
-
-      pokemonList.add(pokemon);
-    }
-
-    return pokemonList;
+  List<Pokemon> getPokemons() {
+    return _pokemonList;
   }
 
-  Future<Pokemon> fetchPokemon(int id) async {
+  @override
+  Future<List<Pokemon>> fetchPokemonList() async {
+    for (int index = 0; index < 5; index++) {
+      final pokemon = await fetchPokemon();
+      _pokemonList.add(pokemon);
+    }
+    return _pokemonList;
+  }
+
+  @override
+  Future<List<Pokemon>> addPokemon() async {
+    final pokemon = await fetchPokemon();
+    _pokemonList.add(pokemon);
+    return _pokemonList;
+  }
+
+  fetchPokemon() async {
+    final id = Random().nextInt(150) + 1;
     final response = await Dio().get('https://pokeapi.co/api/v2/pokemon/$id/');
     final data = response.data as Map<String, dynamic>;
     var name = data["name"] as String;
