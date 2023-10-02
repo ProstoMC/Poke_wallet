@@ -45,6 +45,13 @@ class _PokemonListState extends State<PokemonList> {
             }
             return const SizedBox();
           }),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Increment',
+        onPressed: () {
+          _pokemonListBloc.add(LoadPokemons());
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
